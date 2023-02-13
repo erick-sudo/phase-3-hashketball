@@ -191,6 +191,54 @@ def big_shoe_rebounds
   biggest_rebounds
 end
 
-# game_hash.each_entry do |key, value|
-#   p
-# end
+def most_points_scored
+  most_points = 0
+  goat = ""
+  game_hash.each_entry do |key, value|
+    value[:players].each do |p|
+      if(p[:points] > most_points)
+        most_points = p[:shoe]
+        goat = p[:player_name]
+      end
+    end
+  end
+  goat
+end
+
+def winning_team
+  most_points = 0
+  team = ""
+  game_hash.each_entry do |key, value|
+    total_points = value[:players].map { |p| p[:points] }.sum
+    if(total_points > most_points)
+      team = value[:team_name]
+      most_points = total_points
+    end
+  end
+  team
+end
+
+def player_with_longest_name
+  player_names = game_hash.values.map { |team| team[:players] }.flatten.map { |p| p[:player_name] }
+  player_names.find { |player_name| player_name.length == player_names.map { |pl| pl.length }.max }
+end
+
+def long_name_steals_a_ton
+  playerL = player_with_longest_name
+  steals = 0
+  flag = false
+  for team in game_hash.keys do
+    for p in game_hash[team][:players] do
+      if(p[:steals] > steals)
+        steals = p[:steals]
+        if(p[:player_name] == playerL && steals == p[:steals])
+          flag = true
+        end
+      end
+    end
+  end
+  flag
+end
+
+puts player_with_longest_name
+puts long_name_steals_a_ton
