@@ -127,3 +127,70 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player)
+  for team in game_hash.keys do
+    for p in game_hash[team][:players] do
+      if(p[:player_name] == player)
+        return p[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(player)
+  for team in game_hash.keys do
+    for p in game_hash[team][:players] do
+      if(p[:player_name] == player)
+        return p[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  for team in game_hash.keys do
+    if(game_hash[team][:team_name] == team_name)
+      return game_hash[team][:colors]
+    end
+  end
+end
+
+def team_names
+  game_hash.keys.map { |team| game_hash[team][:team_name] }
+end
+
+def player_numbers(team_name)
+  for team in game_hash.keys do
+    if(game_hash[team][:team_name] == team_name)
+      return game_hash[team][:players].map { |p| p[:number] }
+    end
+  end
+end
+
+def player_stats(player)
+  for team in game_hash.keys do
+    for p in game_hash[team][:players] do
+      if(p[:player_name] == player)
+        return p
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  biggest_rebounds = 0
+  biggest_shoe_size = 0
+  game_hash.each_entry do |key, value|
+    value[:players].each do |p|
+      if(p[:shoe] > biggest_shoe_size)
+        biggest_rebounds = p[:rebounds]
+        biggest_shoe_size = p[:shoe]
+      end
+    end
+  end
+  biggest_rebounds
+end
+
+# game_hash.each_entry do |key, value|
+#   p
+# end
